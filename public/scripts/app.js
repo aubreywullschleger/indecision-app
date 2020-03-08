@@ -1,20 +1,38 @@
 "use strict";
 
-var data = {
-  toggleMessage: "Some details!",
-  visibility: true
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var onToggle = function onToggle(e) {
-  data.visibility = !data.visibility;
-  render();
-};
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var render = function render() {
-  var app = React.createElement("div", null, React.createElement("h1", null, "Visibility Toggle"), React.createElement("button", {
-    onClick: onToggle
-  }, data.visibility ? "Hide details" : "Show details"), !data.visibility && React.createElement("p", null, data.toggleMessage));
-  ReactDOM.render(app, document.getElementById("app"));
-};
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-render();
+var Person = /*#__PURE__*/function () {
+  function Person() {
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "anonymous";
+    var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    _classCallCheck(this, Person);
+
+    this.name = name;
+    this.age = age;
+  }
+
+  _createClass(Person, [{
+    key: "getGreeting",
+    value: function getGreeting() {
+      return "Hello! I am ".concat(this.name, ".");
+    }
+  }, {
+    key: "getDescription",
+    value: function getDescription() {
+      return "".concat(this.name, " is ").concat(this.age, " year(s) old.");
+    }
+  }]);
+
+  return Person;
+}();
+
+var me = new Person("aubrey w", 30);
+console.log(me.getDescription());
+var other = new Person();
+console.log(other.getDescription());
