@@ -93,16 +93,21 @@ var Action = /*#__PURE__*/function (_React$Component3) {
 var Options = /*#__PURE__*/function (_React$Component4) {
   _inherits(Options, _React$Component4);
 
-  function Options() {
+  function Options(props) {
+    var _this;
+
     _classCallCheck(this, Options);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Options).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Options).call(this, props));
+    _this.handleRemoveAll = _this.handleRemoveAll.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Options, [{
     key: "handleRemoveAll",
     value: function handleRemoveAll() {
-      alert("handleRemoveAll");
+      // alert("handleRemoveAll")
+      console.log(this.props.options);
     }
   }, {
     key: "render",

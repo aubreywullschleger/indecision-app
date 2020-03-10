@@ -66,3 +66,19 @@ const render = () => {
 
 const appRoot = document.getElementById('app')
 render()
+
+// Notes about bind:
+// When we reference obj.getName and the variable getName, they try to run the same code obj.getName(), however the context they both ran in is different, obj.getName is in the context of an object and we have access to the object as the this binding - when we break it out into a function we lose the context, the context does not get transfered. We have a regular function, which have an undefined `this` by default ex: const func = function () {console.log(this) //prints undefined}. To set the `this` context on a function which would otherwise have an undefined `this` we use the function.bind(thisObj) method (without passing in this gives us the same exact function w/o `this` context set). We see this happen with event handlers (ex: onClick, onSubmit, etc) to set this we can do onClick={this.handleEvent.bind(this)} or we can override the constructor of the class see app.js 
+// constructor(props) {
+//     super(props)
+//     this.handleRemoveAll = this.handleRemoveAll.bind(this)
+//   }
+
+// const obj = {
+//   name: "aubrey",
+//   getName() {
+//     return this.name
+//   }
+// }
+// const getName = obj.getName.bind(obj)
+// console.log(getName())
