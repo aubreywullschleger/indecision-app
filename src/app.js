@@ -16,6 +16,20 @@ class IndecisionApp extends React.Component {
     }
   }
 
+// Lifecycle methods:
+  // when component first gets mounted to dom, we only have access to lifcycle methods in class based components
+  componentDidMount() {
+    console.log("fetching data")
+  }
+  // when component updates via state or prop changes, we have access to this.state and this.props and prevState and prevProps via arguments
+  componentDidUpdate(prevProps, prevState) {
+    console.log("saving data")
+  }
+  // when a component goes away, fires just before component goes away
+  componentWillUnmount() {
+    console.log("component will unmount")
+  }
+
   // handleDeleteOptions
   handleDeleteOptions() {
     this.setState(() => ({ options: [] }))

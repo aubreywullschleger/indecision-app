@@ -40,10 +40,29 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
       options: props.options
     };
     return _this;
-  } // handleDeleteOptions
+  } // Lifecycle methods:
+  // when component first gets mounted to dom, we only have access to lifcycle methods in class based components
 
 
   _createClass(IndecisionApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log("fetching data");
+    } // when component updates via state or prop changes, we have access to this.state and this.props and prevState and prevProps via arguments
+
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log("saving data");
+    } // when a component goes away, fires just before component goes away
+
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("component will unmount");
+    } // handleDeleteOptions
+
+  }, {
     key: "handleDeleteOptions",
     value: function handleDeleteOptions() {
       this.setState(function () {
