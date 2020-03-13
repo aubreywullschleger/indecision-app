@@ -12,7 +12,7 @@ class IndecisionApp extends React.Component {
     this.handleDeleteOption = this.handleDeleteOption.bind(this)
     // IndecisionApp state
     this.state = {
-      options: props.options
+      options: []
     }
   }
 
@@ -39,9 +39,9 @@ class IndecisionApp extends React.Component {
     
   }
   // when a component goes away, fires just before component goes away
-  componentWillUnmount() {
-    console.log("component will unmount")
-  }
+  // componentWillUnmount() {
+  //   console.log("component will unmount")
+  // }
 
   // handleDeleteOptions
   handleDeleteOptions() {
@@ -99,11 +99,6 @@ class IndecisionApp extends React.Component {
       </div>
     )
   }
-}
-
-// IndecisionApp default props
-IndecisionApp.defaultProps = {
-  options: []
 }
 
 // Header stateless functional component
