@@ -19,11 +19,24 @@ class IndecisionApp extends React.Component {
 // Lifecycle methods:
   // when component first gets mounted to dom, we only have access to lifcycle methods in class based components
   componentDidMount() {
-    console.log("fetching data")
+    try {
+      const json = localStorage.getItem("options")
+      const options = JSON.parse(json)
+
+      if (options) {
+        this.setState(() => ({ options }))
+      }
+    } catch (e) {
+      // do nothing at all
+    } 
   }
   // when component updates via state or prop changes, we have access to this.state and this.props and prevState and prevProps via arguments
   componentDidUpdate(prevProps, prevState) {
-    console.log("saving data")
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options)
+      localStorage.setItem("options", json)
+    }
+    
   }
   // when a component goes away, fires just before component goes away
   componentWillUnmount() {
@@ -126,13 +139,16 @@ const Action = props => {
 const Options = props => {
   return (
     <div>
-      {props.options.map(opt => (
-        <Option 
-          key={opt} 
-          optionText={opt}
-          handleDeleteOption={props.handleDeleteOption}
-        />
-      ))}
+      {props.options.length === 0 && <p>Please add an option to get started</p>}
+      {
+        props.options.map(opt => (
+          <Option 
+            key={opt} 
+            optionText={opt}
+            handleDeleteOption={props.handleDeleteOption}
+          />
+        ))
+      }
       <button onClick={props.handleDeleteOptions}>Remove All Options</button>
     </div>
   )
@@ -175,7 +191,9 @@ class AddOption extends React.Component {
 
     this.setState(() => ({ error }))
     
-    e.target.elements.option.value = ""
+    if (!error) {
+      e.target.elements.option.value = ""
+    }
   }
 
   // render AddOption

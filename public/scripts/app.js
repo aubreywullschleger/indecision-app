@@ -47,13 +47,28 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
   _createClass(IndecisionApp, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log("fetching data");
+      try {
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+
+        if (options) {
+          this.setState(function () {
+            return {
+              options: options
+            };
+          });
+        }
+      } catch (e) {// do nothing at all
+      }
     } // when component updates via state or prop changes, we have access to this.state and this.props and prevState and prevProps via arguments
 
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      console.log("saving data");
+      if (prevState.options.length !== this.state.options.length) {
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem("options", json);
+      }
     } // when a component goes away, fires just before component goes away
 
   }, {
@@ -153,7 +168,7 @@ var Action = function Action(props) {
 
 
 var Options = function Options(props) {
-  return React.createElement("div", null, props.options.map(function (opt) {
+  return React.createElement("div", null, props.options.length === 0 && React.createElement("p", null, "Please add an option to get started"), props.options.map(function (opt) {
     return React.createElement(Option, {
       key: opt,
       optionText: opt,
@@ -204,7 +219,10 @@ var AddOption = /*#__PURE__*/function (_React$Component2) {
           error: error
         };
       });
-      e.target.elements.option.value = "";
+
+      if (!error) {
+        e.target.elements.option.value = "";
+      }
     } // render AddOption
 
   }, {
