@@ -1,28 +1,34 @@
 // class based component - manages state
 // stateless functional component - stateless, presentational, can call methods, faster (b/c not extending React.Component)
 
+// IndecisionApp class component
 class IndecisionApp extends React.Component {
   constructor(props) {
     super(props)
+    // IndecisionApp event handler bindings
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
     this.handlePick = this.handlePick.bind(this)
     this.handleAddOption = this.handleAddOption.bind(this)
+    this.handleDeleteOption = this.handleDeleteOption.bind(this)
+    // IndecisionApp state
     this.state = {
       options: props.options
     }
   }
+
+  // handleDeleteOptions
   handleDeleteOptions() {
-    this.setState(() => {
-      return {
-        options: []
-      }
-    })
+    this.setState(() => ({ options: [] }))
   }
+
+  // handlePick
   handlePick() {
     const randomNum = Math.floor(Math.random() * this.state.options.length)
     const option = this.state.options[randomNum]
     alert(option)
   }
+
+  // handleAddOption
   handleAddOption(option) {
     if (!option) {
       return "enter valid value to add item"
@@ -30,12 +36,19 @@ class IndecisionApp extends React.Component {
       return "option already exists"
     }
 
-    this.setState(prevState => {
-      return {
-        options: prevState.options.concat(option)
-      }
-    })
+    this.setState(prevState => ({ 
+      options: prevState.options.concat(option)
+    }))
   }
+
+  // handleDeleteOption
+  handleDeleteOption(optionToRemove) {
+    this.setState((prevState) => ({
+      options: prevState.options.filter(option => optionToRemove !== option)
+    }))
+  }
+
+  // render IndecisionApp
   render() {
     const subtitle = "Put your life in the hands of a computer."
 
@@ -50,7 +63,8 @@ class IndecisionApp extends React.Component {
         />
         <Options 
           options={this.state.options}
-          handleDeleteOptions={this.handleDeleteOptions} 
+          handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOption={this.handleDeleteOption} 
         />
         <AddOption
           handleAddOption={this.handleAddOption} 
@@ -60,10 +74,12 @@ class IndecisionApp extends React.Component {
   }
 }
 
+// IndecisionApp default props
 IndecisionApp.defaultProps = {
   options: []
 }
 
+// Header stateless functional component
 const Header = props => {
   return (
     <div>
@@ -73,10 +89,12 @@ const Header = props => {
   )
 }
 
+// Header default props
 Header.defaultProps = {
   title: "Indecision"
 }
 
+// Action stateless functional component
 const Action = props => {
   return (
     <div>
@@ -90,48 +108,63 @@ const Action = props => {
   )
 }
 
+// Options stateless functional component 
 const Options = props => {
   return (
     <div>
-      {props.options.map(opt => <Option key={opt} optionText={opt} />)}
+      {props.options.map(opt => (
+        <Option 
+          key={opt} 
+          optionText={opt}
+          handleDeleteOption={props.handleDeleteOption}
+        />
+      ))}
+      <button onClick={props.handleDeleteOptions}>Remove All Options</button>
+    </div>
+  )
+}
+
+// Option stateless functional component
+const Option = props => {
+  return (
+    <div>
+      {props.optionText}
       <button 
-        onClick={props.handleDeleteOptions}
+        onClick={e => {
+          props.handleDeleteOption(props.optionText)
+        }}
       >
-        Remove All Options
+        Remove
       </button>
     </div>
   )
 }
 
-const Option = props => {
-  return (
-    <div>
-      Option: {props.optionText}
-    </div>
-  )
-}
-
+// AddOption class component
 class AddOption extends React.Component {
   constructor(props) {
     super(props)
+    // AddOption event handler binding
     this.handleAddOption = this.handleAddOption.bind(this)
+    // AddOption state
     this.state = {
       error: undefined
     }
   }
+
+  // handleAddOption
   handleAddOption(e) {
     e.preventDefault()
 
     const option = e.target.elements.option.value.trim()
     const error = this.props.handleAddOption(option)
 
-    this.setState(() => {
-      return { error }
-    })
+    this.setState(() => ({ error }))
     
     e.target.elements.option.value = ""
   }
 
+  // render AddOption
   render() {
     return (
       <div>

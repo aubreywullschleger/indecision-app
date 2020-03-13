@@ -20,6 +20,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 // class based component - manages state
 // stateless functional component - stateless, presentational, can call methods, faster (b/c not extending React.Component)
+// IndecisionApp class component
 var IndecisionApp = /*#__PURE__*/function (_React$Component) {
   _inherits(IndecisionApp, _React$Component);
 
@@ -28,15 +29,19 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, IndecisionApp);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(IndecisionApp).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(IndecisionApp).call(this, props)); // IndecisionApp event handler bindings
+
     _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_assertThisInitialized(_this));
     _this.handlePick = _this.handlePick.bind(_assertThisInitialized(_this));
     _this.handleAddOption = _this.handleAddOption.bind(_assertThisInitialized(_this));
+    _this.handleDeleteOption = _this.handleDeleteOption.bind(_assertThisInitialized(_this)); // IndecisionApp state
+
     _this.state = {
       options: props.options
     };
     return _this;
-  }
+  } // handleDeleteOptions
+
 
   _createClass(IndecisionApp, [{
     key: "handleDeleteOptions",
@@ -46,14 +51,16 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
           options: []
         };
       });
-    }
+    } // handlePick
+
   }, {
     key: "handlePick",
     value: function handlePick() {
       var randomNum = Math.floor(Math.random() * this.state.options.length);
       var option = this.state.options[randomNum];
       alert(option);
-    }
+    } // handleAddOption
+
   }, {
     key: "handleAddOption",
     value: function handleAddOption(option) {
@@ -68,7 +75,20 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
           options: prevState.options.concat(option)
         };
       });
-    }
+    } // handleDeleteOption
+
+  }, {
+    key: "handleDeleteOption",
+    value: function handleDeleteOption(optionToRemove) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.filter(function (option) {
+            return optionToRemove !== option;
+          })
+        };
+      });
+    } // render IndecisionApp
+
   }, {
     key: "render",
     value: function render() {
@@ -80,7 +100,8 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
         handlePick: this.handlePick
       }), React.createElement(Options, {
         options: this.state.options,
-        handleDeleteOptions: this.handleDeleteOptions
+        handleDeleteOptions: this.handleDeleteOptions,
+        handleDeleteOption: this.handleDeleteOption
       }), React.createElement(AddOption, {
         handleAddOption: this.handleAddOption
       }));
@@ -88,41 +109,51 @@ var IndecisionApp = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return IndecisionApp;
-}(React.Component);
+}(React.Component); // IndecisionApp default props
+
 
 IndecisionApp.defaultProps = {
   options: []
-};
+}; // Header stateless functional component
 
 var Header = function Header(props) {
   return React.createElement("div", null, React.createElement("h1", null, props.title), props.subtitle && React.createElement("h2", null, props.subtitle));
-};
+}; // Header default props
+
 
 Header.defaultProps = {
   title: "Indecision"
-};
+}; // Action stateless functional component
 
 var Action = function Action(props) {
   return React.createElement("div", null, React.createElement("button", {
     onClick: props.handlePick,
     disabled: !props.hasOptions
   }, "What should I do?"));
-};
+}; // Options stateless functional component 
+
 
 var Options = function Options(props) {
   return React.createElement("div", null, props.options.map(function (opt) {
     return React.createElement(Option, {
       key: opt,
-      optionText: opt
+      optionText: opt,
+      handleDeleteOption: props.handleDeleteOption
     });
   }), React.createElement("button", {
     onClick: props.handleDeleteOptions
   }, "Remove All Options"));
-};
+}; // Option stateless functional component
+
 
 var Option = function Option(props) {
-  return React.createElement("div", null, "Option: ", props.optionText);
-};
+  return React.createElement("div", null, props.optionText, React.createElement("button", {
+    onClick: function onClick(e) {
+      props.handleDeleteOption(props.optionText);
+    }
+  }, "Remove"));
+}; // AddOption class component
+
 
 var AddOption = /*#__PURE__*/function (_React$Component2) {
   _inherits(AddOption, _React$Component2);
@@ -132,13 +163,16 @@ var AddOption = /*#__PURE__*/function (_React$Component2) {
 
     _classCallCheck(this, AddOption);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(AddOption).call(this, props));
-    _this2.handleAddOption = _this2.handleAddOption.bind(_assertThisInitialized(_this2));
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(AddOption).call(this, props)); // AddOption event handler binding
+
+    _this2.handleAddOption = _this2.handleAddOption.bind(_assertThisInitialized(_this2)); // AddOption state
+
     _this2.state = {
       error: undefined
     };
     return _this2;
-  }
+  } // handleAddOption
+
 
   _createClass(AddOption, [{
     key: "handleAddOption",
@@ -152,7 +186,8 @@ var AddOption = /*#__PURE__*/function (_React$Component2) {
         };
       });
       e.target.elements.option.value = "";
-    }
+    } // render AddOption
+
   }, {
     key: "render",
     value: function render() {
