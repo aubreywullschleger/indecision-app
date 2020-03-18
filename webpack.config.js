@@ -19,5 +19,11 @@ module.exports = {
       }
     }]
   },
-  devtool: "cheap-module-eval-source-map"
+  devtool: "cheap-module-eval-source-map",
+  devServer: {
+    contentBase: path.join(__dirname, "public")
+  }
 }
+
+// old command from package.json to run babel
+// "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
