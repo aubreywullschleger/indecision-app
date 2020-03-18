@@ -15,7 +15,8 @@ module.exports = {
         presets: [
           "@babel/preset-env", 
           "@babel/preset-react"
-        ]
+        ],
+        plugins: ["transform-class-properties"]
       }
     }]
   },
@@ -24,6 +25,3 @@ module.exports = {
     contentBase: path.join(__dirname, "public")
   }
 }
-
-// old command from package.json to run babel
-// "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
