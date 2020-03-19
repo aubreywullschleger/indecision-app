@@ -6,7 +6,7 @@ const Layout = (props) => {
   return (
     <div>
       <p>header</p>
-      {props.content}
+      {props.children}
       <p>footer</p>
     </div>
   )
@@ -15,8 +15,12 @@ const Layout = (props) => {
 const template = (
   <div>
     <h1>page title</h1>
-    <p>content</p>
+    
   </div>
 )
 
-ReactDOM.render(<Layout content={template} />, document.getElementById("app"))
+ReactDOM.render((
+  <Layout>
+    <p>inline content</p>
+  </Layout>
+), document.getElementById("app"))
