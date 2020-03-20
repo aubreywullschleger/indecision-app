@@ -18,6 +18,12 @@ module.exports = {
         ],
         plugins: ["transform-class-properties"]
       }
+    }, {
+      test: /\.css$/,
+      use: [
+        "style-loader",
+        "css-loader" 
+      ]
     }]
   },
   devtool: "cheap-module-eval-source-map",
