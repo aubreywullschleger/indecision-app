@@ -1,5 +1,5 @@
 # [The Complete React Developer Course by Andrew Mead](https://www.udemy.com/course/react-2nd-edition/)
 ---
-### Indecision app + course challenge solutions
+### Indecision app + course challenge solutions (sections 1-9)
 
-Personal repo for The Complete React Developer Course by Andrew Mead used as a refresher. This repo includes the indecision app built during the course and solved course challenges.
+This repo includes the indecision app built during The Complete React Developer Course by Andrew Mead and solved course challenges for sections 1-9.
