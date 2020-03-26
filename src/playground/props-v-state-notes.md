@@ -8,3 +8,5 @@
 
 * Props (if any) get passed to component --> component can pass props (if any) to a child component
 * When the component is rendering it has access to props and state
+
+test
